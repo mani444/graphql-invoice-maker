@@ -6,6 +6,14 @@ const { expressMiddleware } = require('@apollo/server/express4')
 
 const startServer = async () => {
     const app = express()
+    const resolvers = {
+        Query: {
+            getInvoices: () => [
+                { id: '1', title: 'First Invoice', body: 'This is the first invoice' },
+                { id: '2', title: 'Second Invoice', body: 'This is the second invoice' }
+            ]
+        }
+    }
     const server = new ApolloServer({
         typeDefs: `
             type Invoice {
@@ -19,7 +27,7 @@ const startServer = async () => {
                 getInvoices: [Invoice]
             }
         `,
-        resolvers: {},
+        resolvers,
     })
     app.use(bodyParser.json());
 
